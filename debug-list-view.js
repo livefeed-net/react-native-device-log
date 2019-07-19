@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
-    ListView,
+    FlatList,
     Animated,
     TouchableOpacity,
     PixelRatio,
@@ -26,18 +26,9 @@ const LISTVIEW_REF = "listview";
 export default class Debug extends React.Component {
     constructor() {
         super();
-        let ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => {
-                let rowHasChanged = r1.id !== r2.id;
-                if (r1.expanded !== r2.expanded) {
-                    return true;
-                }
-                return rowHasChanged;
-            },
-        });
         this.preparedRows = { blob: {} };
         this.state = {
-            dataSource: ds.cloneWithRows([]),
+            dataSource: [],
             paused: false,
             rows: [],
         };
@@ -57,17 +48,19 @@ export default class Debug extends React.Component {
                     : new Animated.Value(0),
             };
             return o;
-        }, {});
+        }, []);
     }
 
     renderList(props) {
         if (!this.state.paused) {
             this.preparedRows = this.prepareRows(props.rows);
+            let rowsToRender = [];
+            if(this.preparedRows){
+                rowsToRender = Object.values(this.preparedRows);
+            }
             this.setState({
                 rows: props.rows,
-                dataSource: this.state.dataSource.cloneWithRows(
-                    this.preparedRows
-                ),
+                dataSource: rowsToRender
             });
         }
     }
@@ -94,7 +87,7 @@ export default class Debug extends React.Component {
         return timeStamp.format(this.props.timeStampFormat || "HH:mm:ss");
     }
 
-    onRowPress(sectionID, rowID) {
+    onRowPress(rowID) {
         const rowBefore = this.preparedRows[rowID];
         if (this.props.multiExpanded) {
             const row = this.state.rows.find(row => row.id === rowID);
@@ -112,8 +105,12 @@ export default class Debug extends React.Component {
             },
             duration: 650,
         });
+        let rowsToRender = [];
+        if(this.preparedRows){
+            rowsToRender = Object.values(this.preparedRows);
+        }
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(this.preparedRows),
+            dataSource: rowsToRender
         });
     }
 
@@ -125,7 +122,7 @@ export default class Debug extends React.Component {
         }).start();
     }
 
-    _renderSeperator(rowData, sectionID, rowID, highlightRow, animationStyle) {
+    _renderSeperator(rowData, animationStyle) {
         const seperatorStyles = [
             styles.logRowMessage,
             styles.logRowMessageBold,
@@ -152,7 +149,7 @@ export default class Debug extends React.Component {
         );
     }
 
-    _renderLogRow(rowData, sectionID, rowID, highlightRow, animationStyle) {
+    _renderLogRow(rowData, rowID, animationStyle) {
         return (
             <Animated.View
                 style={[
@@ -173,7 +170,7 @@ export default class Debug extends React.Component {
                             maxHeight: rowData.expanded ? undefined : 25,
                         },
                     ]}
-                    onPress={this.onRowPress.bind(this, sectionID, rowID)}
+                    onPress={this.onRowPress.bind(this, rowID)}
                 >
                     <Text
                         style={[styles.logRowMessage, styles.logRowLevelLabel]}
@@ -199,8 +196,10 @@ export default class Debug extends React.Component {
         );
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(row) {
         let animationStyle = {};
+        const rowData = row.item;
+        const rowID = rowData.id;
         if (rowData.anim) {
             animationStyle = {
                 opacity: rowData.anim,
@@ -219,17 +218,12 @@ export default class Debug extends React.Component {
             case "seperator":
                 return this._renderSeperator(
                     rowData,
-                    sectionID,
-                    rowID,
-                    highlightRow,
                     animationStyle
                 );
             default:
                 return this._renderLogRow(
                     rowData,
-                    sectionID,
                     rowID,
-                    highlightRow,
                     animationStyle
                 );
         }
@@ -283,7 +277,7 @@ export default class Debug extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.listContainer}>
-                    <ListView
+                    <FlatList
                         renderSeparator={this._renderSeparator.bind(this)}
                         keyboardShouldPersistTaps="always"
                         automaticallyAdjustContentInsets={false}
@@ -297,8 +291,8 @@ export default class Debug extends React.Component {
                         )}
                         enableEmptySections={true}
                         ref={LISTVIEW_REF}
-                        dataSource={this.state.dataSource}
-                        renderRow={this._renderRow.bind(this)}
+                        data={this.state.dataSource}
+                        renderItem={this._renderRow.bind(this)}
                         {...props}
                     />
                 </View>
