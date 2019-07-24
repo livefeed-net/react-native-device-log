@@ -196,6 +196,10 @@ export default class Debug extends React.Component {
         );
     }
 
+    _getRowKey(rowData){
+        return rowData.id
+    }
+    
     _renderRow(row) {
         let animationStyle = {};
         const rowData = row.item;
@@ -293,6 +297,7 @@ export default class Debug extends React.Component {
                         ref={LISTVIEW_REF}
                         data={this.state.dataSource}
                         renderItem={this._renderRow.bind(this)}
+                        keyExtractor={this._getRowKey.bind(this)}
                         {...props}
                     />
                 </View>
