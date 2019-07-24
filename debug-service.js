@@ -43,27 +43,27 @@ class DebugService {
     }
 
     _handleConnectivityTypeChange(connectionInfo) {
-        let { type, effectiveType } = connectionInfo;
+        let { type, details } = connectionInfo;
         if (type === "none") {
             this.hasBeenDisconnected = true;
-            this.seperator(`DISCONNECTED FROM INTERNET`);
+            this.separator(`DISCONNECTED FROM INTERNET`);
         } else {
             const buildConnectionString = () => {
-                return `${type.toUpperCase()}${effectiveType === "unknown"
-                    ? ""
-                    : ` - ${effectiveType}`}`;
+                if(details && details.cellularGeneration)
+                    return details.cellularGeneration
+                return ""
             };
             if (this.hasBeenDisconnected) {
-                this.seperator(
+                this.separator(
                     `[NETINFO] RECONNECTED TO ${buildConnectionString()}`
                 );
             } else {
                 if (this.connectionHasBeenEstablished) {
-                    this.seperator(
+                    this.separator(
                         `[NETINFO] CHANGED TO ${buildConnectionString()}`
                     );
                 } else {
-                    this.seperator(
+                    this.separator(
                         `[NETINFO] CONNECTION TO ${buildConnectionString()}`
                     );
                 }
@@ -73,7 +73,7 @@ class DebugService {
     }
 
     _handleAppStateChange(currentAppState) {
-        this.seperator(`APP STATE: ${currentAppState.toUpperCase()}`);
+        this.separator(`APP STATE: ${currentAppState.toUpperCase()}`);
     }
 
     setupRNErrorLogging() {
@@ -274,7 +274,7 @@ class DebugService {
         }
     }
 
-    seperator(name) {
+    separator(name) {
         return this._log("seperator", undefined, name);
     }
 
