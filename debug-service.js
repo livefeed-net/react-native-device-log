@@ -1,4 +1,4 @@
-import { AsyncStorage, AppState } from "react-native";
+import { AppState } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import moment from "moment";
 import InMemory from "./adapters/in-memory";

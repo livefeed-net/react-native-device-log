@@ -32,9 +32,9 @@ import  {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-  AsyncStorage
+  View
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //The device-log contains the public api that you will use in your app.
 //The LogView is the GUI/Log-list that you can render at desired location //in your app:
