@@ -29,7 +29,7 @@ export default class Debug extends React.Component {
         this.preparedRows = { blob: {} };
         this.state = {
             dataSource: [],
-            paused: false,
+            paused: props.paused,
             rows: [],
         };
         this.styleSheet = getStyleSheet(props)
@@ -52,8 +52,12 @@ export default class Debug extends React.Component {
         }, []);
     }
 
+    isPaused(){
+        return !this.props.paused && !this.state.paused;
+    }
+
     renderList(props) {
-        if (!this.state.paused) {
+        if (this.isPaused()) {
             this.preparedRows = this.prepareRows(props.rows);
             let rowsToRender = [];
             if(this.preparedRows){
@@ -408,4 +412,5 @@ Debug.defaultProps = {
     textColor : DEFAULT_TEXT_COLOR,
     renderLevel : true,
     renderTimestamp : true,
+    paused: false
 };
