@@ -9,5 +9,5 @@ export default {
     success: "#54df72",
     RNFatal: "#ff0000",
     RNError: "#df5454",
-    seperator: "#ffffff",
+    separator: "#ffffff",
 };
