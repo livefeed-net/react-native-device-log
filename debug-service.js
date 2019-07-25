@@ -13,7 +13,7 @@ import colors from "./colors";
 const APP_START_LOG_MESSAGE = {
     id: guid(),
     lengthAtInsertion: 0,
-    level: "seperator",
+    level: "separator",
     message: "APP START",
     timeStamp: moment(),
     color: "#FFF",
@@ -275,7 +275,7 @@ class DebugService {
     }
 
     separator(name) {
-        return this._log("seperator", undefined, name);
+        return this._log("separator", undefined, name);
     }
 
     getColorForLogLevel(level) {

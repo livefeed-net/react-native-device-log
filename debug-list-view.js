@@ -10,16 +10,13 @@ import {
     NativeModules,
     LayoutAnimation,
 } from "react-native";
-import moment from "moment";
 import debugService from "./debug-service";
 import InvertibleScrollView from "react-native-invertible-scroll-view";
 const NativeAnimatedModule = NativeModules.NativeAnimatedModule;
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(
-    TouchableOpacity
-);
+
 const PRIMARY_COLOR = "#3b3b3b";
 const SELECT_COLOR = "#292929";
-const SEPERATOR_COLOR = "rgb(252, 217, 28)";
+const SEPARATOR_COLOR = "rgb(252, 217, 28)";
 const SECONDARY_COLOR = "#181818";
 const TEXT_COLOR = "#D6D6D6";
 const LISTVIEW_REF = "listview";
@@ -122,29 +119,29 @@ export default class Debug extends React.Component {
         }).start();
     }
 
-    _renderSeperator(rowData, animationStyle) {
-        const seperatorStyles = [
+    _renderSeparator(rowData, animationStyle) {
+        const separatorStyles = [
             styles.logRowMessage,
             styles.logRowMessageBold,
-            styles.seperator,
+            styles.separator,
         ];
         return (
             <Animated.View
                 style={[styles.debugRowContainer, animationStyle]}
                 onLayout={this.onRowLayout.bind(this, rowData)}
             >
-                <Text style={seperatorStyles}>*****</Text>
+                <Text style={separatorStyles}>*****</Text>
                 <Text
                     style={[
                         styles.logRowMessage,
                         styles.logRowMessageMain,
-                        styles.logRowMessageSeperator,
+                        styles.logRowMessageSeparator,
                     ]}
                 >
                     {rowData.message}
                     - {rowData.timeStamp.format("YYYY-MM-DD HH:mm:ss")}
                 </Text>
-                <Text style={seperatorStyles}>*****</Text>
+                <Text style={separatorStyles}>*****</Text>
             </Animated.View>
         );
     }
@@ -219,8 +216,8 @@ export default class Debug extends React.Component {
         }
 
         switch (rowData.level) {
-            case "seperator":
-                return this._renderSeperator(
+            case "separator":
+                return this._renderSeparator(
                     rowData,
                     animationStyle
                 );
@@ -237,20 +234,6 @@ export default class Debug extends React.Component {
         if (this.refs[LISTVIEW_REF]) {
             this.refs[LISTVIEW_REF].scrollTo({ x: 0, y: 0, animated: true });
         }
-    }
-
-    _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-        return (
-            <View
-                key={`${sectionID}-${rowID}`}
-                style={{
-                    height: adjacentRowHighlighted ? 4 : 0,
-                    backgroundColor: adjacentRowHighlighted
-                        ? PRIMARY_COLOR
-                        : "transparent",
-                }}
-            />
-        );
     }
 
     render() {
@@ -282,7 +265,6 @@ export default class Debug extends React.Component {
                 </View>
                 <View style={styles.listContainer}>
                     <FlatList
-                        renderSeparator={this._renderSeparator.bind(this)}
                         keyboardShouldPersistTaps="always"
                         automaticallyAdjustContentInsets={false}
                         initialListSize={20}
@@ -374,15 +356,15 @@ const styles = StyleSheet.create({
         minWidth: 80,
         fontWeight: "bold",
     },
-    logRowMessageSeperator: {
+    logRowMessageSeparator: {
         fontSize: 11,
         fontWeight: "bold",
         textAlign: "center",
-        color: SEPERATOR_COLOR,
+        color: SEPARATOR_COLOR,
     },
-    seperator: {
+    separator: {
         fontSize: 18,
-        color: SEPERATOR_COLOR,
+        color: SEPARATOR_COLOR,
     },
     logRowMessageMain: {
         flex: 1,
