@@ -40,37 +40,50 @@ class DebugService {
             logConnection: true,
             ...options,
         };
+
+        this.oldCnxInfo = {
+            isConnected: false,
+            isInternetReachable: false,
+            type: 'none' 
+        }
     }
 
-    _handleConnectivityTypeChange(connectionInfo) {
-        let { type, details } = connectionInfo;
-        if (type === "none") {
-            this.hasBeenDisconnected = true;
-            this.separator(`DISCONNECTED FROM INTERNET`);
-        } else {
-            const buildConnectionString = () => {
-                if(details && details.cellularGeneration)
-                    return details.cellularGeneration
-                return ""
-            };
-            if (this.hasBeenDisconnected) {
-                this.separator(
-                    `[NETINFO] RECONNECTED TO ${buildConnectionString()}`
-                );
-            } else {
-                if (this.connectionHasBeenEstablished) {
-                    this.separator(
-                        `[NETINFO] CHANGED TO ${buildConnectionString()}`
-                    );
-                } else {
-                    this.separator(
-                        `[NETINFO] CONNECTION TO ${buildConnectionString()}`
-                    );
-                }
-            }
-        }
-        this.connectionHasBeenEstablished = true;
-    }
+    
+ 
+     _handleConnectivityTypeChange(cnxInfo) {
+         try{
+             let { type, details, isInternetReachable } = cnxInfo;
+ 
+             const buildConnectionString = () => {
+                 let cnx = type;
+                 if(details && details.cellularGeneration)
+                     cnx += ' - ' + details.cellularGeneration;
+                 return cnx.toUpperCase();
+             };
+ 
+             if(this.oldCnxInfo.type !== type){
+                 if(type === "none"){
+                     this.separator(`NETWORK DISCONNECTED`)
+                     return
+                 }
+                 if(this.oldCnxInfo.type === "none"){
+                     this.separator(`NETWORK CONNECTED TO ${buildConnectionString()}`)
+                     return
+                 }
+                 this.separator(`NETWORK CHANGED TO ${buildConnectionString()}`)
+                 return
+             }
+ 
+             if(this.oldCnxInfo.isInternetReachable !== isInternetReachable){
+                 if(isInternetReachable)
+                     this.separator(`NETWORK CONNECTED TO INTERNET`)
+                 else
+                     this.separator(`NETWORK DISCONNECTED FROM INTERNET`)
+             }
+         }finally{
+             this.oldCnxInfo = cnxInfo;
+         }
+     }
 
     _handleAppStateChange(currentAppState) {
         this.separator(`APP STATE: ${currentAppState.toUpperCase()}`);
@@ -124,7 +137,6 @@ class DebugService {
         }
         if (this.options.logConnection) {
             NetInfo.addEventListener(
-                "connectionChange",
                 this._handleConnectivityTypeChange.bind(this)
             );
         }
