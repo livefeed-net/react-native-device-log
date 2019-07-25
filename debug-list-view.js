@@ -135,7 +135,7 @@ export default class Debug extends React.Component {
                 style={[this.styleSheet.debugRowContainer, animationStyle]}
                 onLayout={this.onRowLayout.bind(this, rowData)}
             >
-                <Text style={separatorStyles}>*****</Text>
+                {this.props.renderLevel && <Text style={separatorStyles}>*****</Text>}
                 <Text
                     style={[
                         this.styleSheet.logRowMessage,
@@ -146,7 +146,7 @@ export default class Debug extends React.Component {
                     {rowData.message}
                     - {rowData.timeStamp.format("YYYY-MM-DD HH:mm:ss")}
                 </Text>
-                <Text style={separatorStyles}>*****</Text>
+                {this.props.renderTimestamp && <Text style={separatorStyles}>*****</Text>}
             </Animated.View>
         );
     }
@@ -174,11 +174,11 @@ export default class Debug extends React.Component {
                     ]}
                     onPress={this.onRowPress.bind(this, rowID)}
                 >
-                    <Text
+                    {this.props.renderLevel && <Text
                         style={[this.styleSheet.logRowMessage, this.styleSheet.logRowLevelLabel]}
                     >
                         {`[${rowData.level.toUpperCase()}]`}
-                    </Text>
+                    </Text>}
                     <Text
                         style={[
                             this.styleSheet.logRowMessage,
@@ -190,9 +190,9 @@ export default class Debug extends React.Component {
                     >
                         {rowData.message}
                     </Text>
-                    <Text style={this.styleSheet.logRowMessage}>
+                    {this.props.renderTimestamp && <Text style={this.styleSheet.logRowMessage}>
                         {this._formatTimeStamp(rowData.timeStamp, rowData)}
-                    </Text>
+                    </Text>}
                 </TouchableOpacity>
             </Animated.View>
         );
@@ -406,4 +406,6 @@ Debug.defaultProps = {
     separatorColor : DEFAULT_SEPARATOR_COLOR,
     backgroundColor : DEFAULT_BACKGROUND_COLOR,
     textColor : DEFAULT_TEXT_COLOR,
+    renderLevel : true,
+    renderTimestamp : true,
 };
