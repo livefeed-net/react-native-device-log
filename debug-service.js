@@ -258,26 +258,30 @@ class DebugService {
 
     rnerror(fatal, message, stackTrace) {
         let errorString = `ERROR: ${message}  \nSTACKSTRACE:\n`;
-        if (stackTrace && Array.isArray(stackTrace)) {
-            const stackStrings = stackTrace.map(stackTraceItem => {
-                let methodName = "-";
-                let lineNumber = "-";
-                let column = "-";
-                if (stackTraceItem.methodName) {
-                    methodName =
-                        stackTraceItem.methodName === "<unknown>"
-                            ? "-"
-                            : stackTraceItem.methodName;
-                }
-                if (stackTraceItem.lineNumber !== undefined) {
-                    lineNumber = stackTraceItem.lineNumber.toString();
-                }
-                if (stackTraceItem.column !== undefined) {
-                    column = stackTraceItem.column.toString();
-                }
-                return `Method: ${methodName}, LineNumber: ${lineNumber}, Column: ${column}\n`;
-            });
-            errorString += stackStrings.join("\n");
+        try{
+            if (stackTrace && Array.isArray(stackTrace)) {
+                const stackStrings = stackTrace.map(stackTraceItem => {
+                    let methodName = "-";
+                    let lineNumber = "-";
+                    let column = "-";
+                    if (stackTraceItem.methodName) {
+                        methodName =
+                            stackTraceItem.methodName === "<unknown>"
+                                ? "-"
+                                : stackTraceItem.methodName;
+                    }
+                    if (!isNaN(stackTraceItem.lineNumber)) {
+                        lineNumber = stackTraceItem.lineNumber;
+                    }
+                    if (!isNaN(stackTraceItem.column)) {
+                        column = stackTraceItem.column;
+                    }
+                    return `Method: ${methodName}, LineNumber: ${lineNumber}, Column: ${column}\n`;
+                });
+                errorString += stackStrings.join("\n");
+            }
+        }catch(e){
+            errorString += "An error has occurred while generating the stack trace string\n"
         }
         if (fatal) {
             return this._log("RNFatal", undefined, errorString);
