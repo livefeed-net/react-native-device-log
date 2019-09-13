@@ -1,5 +1,4 @@
 import { AppState } from "react-native";
-import NetInfo from "@react-native-community/netinfo";
 import moment from "moment";
 import InMemory from "./adapters/in-memory";
 import timers from "./timers";
@@ -9,6 +8,14 @@ import stringify from "json-stringify-safe";
 import StringifyDataWriter from "./data-writers/stringify-data-writer";
 import guid from "./guid";
 import colors from "./colors";
+import VersionNumber from 'react-native-version-number'
+
+let NetInfo
+if (VersionNumber.appVersion >= '2.0.7') {
+  NetInfo = require("@react-native-community/netinfo").default
+} else {
+  NetInfo = require("rn-legacy-59").NetInfo
+}
 
 const APP_START_LOG_MESSAGE = {
     id: guid(),
