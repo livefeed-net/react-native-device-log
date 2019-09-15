@@ -21,7 +21,7 @@
   "dependencies": {
     "rn-legacy-59": "https://github.com/bright-systems/rn-legacy-59",
     "react-native-version-number": "^0.3.4",
-    "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/async-storage": "1.6.1",
     "@react-native-community/netinfo": "4.0.0",
     "debounce": "^1.0.2",
     "json-stringify-safe": "^5.0.1",
