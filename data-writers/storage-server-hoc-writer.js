@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'rn-legacy-59'
 import StringifyDataWriter from "./stringify-data-writer";
 import moment from "moment";
 
