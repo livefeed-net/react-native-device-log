@@ -240,7 +240,7 @@ export default class Debug extends React.Component {
     }
 
     onCenterColumnPressed() {
-        if (this.refs[LISTVIEW_REF] && typeof(this.refs[LISTVIEW_REF]['scrollTo'] === 'function')) {
+        if (this.refs[LISTVIEW_REF] && this.refs[LISTVIEW_REF]['scrollTo']) {
             this.refs[LISTVIEW_REF].scrollTo({ x: 0, y: 0, animated: true });
         }
     }
