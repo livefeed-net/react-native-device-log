@@ -205,7 +205,7 @@ export default class Debug extends React.Component {
     _getRowKey(rowData){
         return rowData.id
     }
-    
+
     _renderRow(row) {
         let animationStyle = {};
         const rowData = row.item;
@@ -240,7 +240,7 @@ export default class Debug extends React.Component {
     }
 
     onCenterColumnPressed() {
-        if (this.refs[LISTVIEW_REF]) {
+        if (this.refs[LISTVIEW_REF] && typeof(this.refs[LISTVIEW_REF]['scrollTo'] === 'function')) {
             this.refs[LISTVIEW_REF].scrollTo({ x: 0, y: 0, animated: true });
         }
     }
@@ -248,8 +248,8 @@ export default class Debug extends React.Component {
     renderToolbar(){
         if(this.props.renderToolbar){
             let options = {
-                onPause: this.onPauseButtonPressed.bind(this), 
-                onClear: this.onClearButtonPressed.bind(this), 
+                onPause: this.onPauseButtonPressed.bind(this),
+                onClear: this.onClearButtonPressed.bind(this),
                 length: this.state.rows
             }
             return this.props.renderToolbar(options)
