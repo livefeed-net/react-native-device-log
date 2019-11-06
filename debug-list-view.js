@@ -70,7 +70,7 @@ export default class Debug extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.renderList(nextProps);
         this.styleSheet = getStyleSheet(this.props)
     }
