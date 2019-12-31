@@ -14,7 +14,7 @@ let NetInfo
 if (VersionNumber.appVersion >= '2.4.13') {
   NetInfo = require("@react-native-community/netinfo").default
 } else if (VersionNumber.appVersion >= '2.0.7') {
-  NetInfo = require("@react-native-community/netinfo-2.1.4").default
+  NetInfo = require("@react-native-community/netinfo-4.1.2").default
 } else {
   NetInfo = require("rn-legacy-59").NetInfo
 }
