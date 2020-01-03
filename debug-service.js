@@ -9,7 +9,8 @@ import StringifyDataWriter from "./data-writers/stringify-data-writer";
 import guid from "./guid";
 import colors from "./colors";
 import VersionNumber from 'react-native-version-number'
-import semver from 'semver'
+
+const semver = require('semver')
 
 let NetInfo
 if (semver.satisfies(VersionNumber.appVersion, '>=2.4.13')) {
