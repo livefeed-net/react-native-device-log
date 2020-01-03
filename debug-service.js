@@ -13,10 +13,13 @@ import compareVersions from 'compare-versions'
 
 let NetInfo
 if (compareVersions(VersionNumber.appVersion, '2.4.13', '>=') >= 0) {
+  console.log('Device-log - loading netinfo')
   NetInfo = require("@react-native-community/netinfo").default
 } else if (compareVersions(VersionNumber.appVersion, '2.0.7', '>=') >= 0) {
+  console.log('Device-log - loading netinfo 4.1.2')
   NetInfo = require("@react-native-community/netinfo-4.1.2").default
 } else {
+  console.log('Device-log - loading netinfo legacy')
   NetInfo = require("rn-legacy-59").NetInfo
 }
 
