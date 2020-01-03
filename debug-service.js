@@ -15,7 +15,7 @@ let NetInfo
 if (semver.satisfies(VersionNumber.appVersion, '>=2.4.13')) {
   console.log('Device-log - loading netinfo')
   NetInfo = require("@react-native-community/netinfo").default
-} else if (semver.satisfies(VersionNumber.appVersion, '>=2.0.7') {
+} else if (semver.satisfies(VersionNumber.appVersion, '>=2.0.7')) {
   console.log('Device-log - loading netinfo 4.1.2')
   NetInfo = require("@react-native-community/netinfo-4.1.2").default
 } else {
