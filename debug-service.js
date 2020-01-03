@@ -12,9 +12,9 @@ import VersionNumber from 'react-native-version-number'
 import compareVersions from 'compare-versions'
 
 let NetInfo
-if (compareVersions(VersionNumber.appVersion, '2.4.13', '>=')) {
+if (compareVersions(VersionNumber.appVersion, '2.4.13', '>=') >= 0) {
   NetInfo = require("@react-native-community/netinfo").default
-} else if (compareVersions(VersionNumber.appVersion, '2.0.7', '>=')) {
+} else if (compareVersions(VersionNumber.appVersion, '2.0.7', '>=') >= 0) {
   NetInfo = require("@react-native-community/netinfo-4.1.2").default
 } else {
   NetInfo = require("rn-legacy-59").NetInfo
