@@ -21,13 +21,13 @@
   "dependencies": {
     "@react-native-community/netinfo": "5.2.0",
     "@react-native-community/netinfo-4.1.2": "https://github.com/bright-systems/react-native-netinfo-4.1.2",
-    "compare-versions": "^3.5.1",
     "debounce": "^1.0.2",
     "json-stringify-safe": "^5.0.1",
     "moment": "^2.18.1",
     "react-native-invertible-scroll-view": "^2.0.0",
     "react-native-version-number": "^0.3.4",
     "rn-legacy-59": "https://github.com/bright-systems/rn-legacy-59",
+    "semver": "^7.1.1",
     "stacktrace-parser": "^0.1.6"
   }
 }

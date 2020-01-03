@@ -9,13 +9,13 @@ import StringifyDataWriter from "./data-writers/stringify-data-writer";
 import guid from "./guid";
 import colors from "./colors";
 import VersionNumber from 'react-native-version-number'
-import compareVersions from 'compare-versions'
+import semver from 'semver'
 
 let NetInfo
-if (compareVersions(VersionNumber.appVersion, '2.4.13', '>=') >= 0) {
+if (semver.satisfies(VersionNumber.appVersion, '>=2.4.13')) {
   console.log('Device-log - loading netinfo')
   NetInfo = require("@react-native-community/netinfo").default
-} else if (compareVersions(VersionNumber.appVersion, '2.0.7', '>=') >= 0) {
+} else if (semver.satisfies(VersionNumber.appVersion, '>=2.0.7') {
   console.log('Device-log - loading netinfo 4.1.2')
   NetInfo = require("@react-native-community/netinfo-4.1.2").default
 } else {
