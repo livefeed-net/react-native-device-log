@@ -8,7 +8,6 @@ import stringify from "json-stringify-safe";
 import StringifyDataWriter from "./data-writers/stringify-data-writer";
 import guid from "./guid";
 import colors from "./colors";
-import VersionNumber from "react-native-version-number";
 
 let NetInfo = require("@react-native-community/netinfo").default;
 
