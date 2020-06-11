@@ -29,7 +29,7 @@ export default class DebugView extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.listner = debugService.onDebugRowsChanged(this.updateDebounced);
     }
 
