@@ -19,14 +19,13 @@
   "author": "Olof Dahlbom",
   "license": "MIT",
   "dependencies": {
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/netinfo": "^5.7.0",
     "debounce": "^1.0.2",
     "json-stringify-safe": "^5.0.1",
     "moment": "^2.24.0",
     "react-native-invertible-scroll-view": "^2.0.0",
     "react-native-version-number": "^0.3.4",
-    "rn-legacy-59": "https://github.com/bright-systems/rn-legacy-59",
     "semver": "^7.1.1",
     "stacktrace-parser": "^0.1.6"
   }
